@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tekstalternatieven helper</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- plak hier je HTML uit CodePen, zonder <style> en <script> -->
+<main class="page">
+  <header class="head">
+    <div>
+      <h1>3. Schrijf tekstalternatieven voor afbeeldingen</h1>
+      <p>Voeg bij elke afbeelding een korte beschrijving toe die vertelt wat de afbeelding laat zien of doet.</p>
+      <p class="muted">Bepaal in welke categorie je afbeelding valt:</p>
+    </div>
+  </header>
+
+  <!-- Q1 -->
+  <fieldset class="q" id="q1">
+    <legend>Staat er tekst in de afbeelding?</legend>
+
+    <label class="opt">
+      <input type="radio" name="hasText" value="yes" />
+      <span>Ja, er staat tekst in de afbeelding</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="hasText" value="no" checked />
+      <span>Nee, er staat geen tekst in de afbeelding</span>
+    </label>
+  </fieldset>
+
+  <!-- Q1a (alleen bij "Ja") -->
+  <fieldset class="q" id="q1a" hidden>
+    <legend>Wat voor tekst staat er in de afbeelding?</legend>
+
+    <label class="opt">
+      <input type="radio" name="textType" value="alreadyOnPage" />
+      <span>Deze tekst staat ook al in de normale tekst op de pagina</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="textType" value="visualOnly" />
+      <span>Deze tekst wordt alleen voor visueel effect gebruikt</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="textType" value="functional" />
+      <span>Deze tekst heeft een functie (zoals een knop of link)</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="textType" value="nowhereElse" />
+      <span>Deze tekst staat nergens anders op de pagina</span>
+    </label>
+  </fieldset>
+
+  <!-- Q2 (alleen bij "Nee") -->
+  <fieldset class="q" id="q2" hidden>
+    <legend>Wordt de afbeelding gebruikt in een link of knop?</legend>
+
+    <label class="opt">
+      <input type="radio" name="inControl" value="yesOnlyImage" />
+      <span>Ja, en zonder de afbeelding snap je niet waar de link naartoe gaat</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="inControl" value="yesWithText" />
+      <span>Ja, maar de link of knop heeft ook tekst die uitlegt wat er gebeurt</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="inControl" value="no" />
+      <span>Nee, de afbeelding staat niet in een link of knop</span>
+    </label>
+  </fieldset>
+
+  <!-- Q3 (alleen bij "Nee") -->
+  <fieldset class="q" id="q3" hidden>
+    <legend>Voegt de afbeelding belangrijke informatie toe aan de pagina?</legend>
+
+    <label class="opt">
+      <input type="radio" name="addsInfo" value="simpleInfo" />
+      <span>Ja, het is een eenvoudige foto of grafiek die informatie geeft</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="addsInfo" value="complexInfo" />
+      <span>Ja, het is een complexe grafiek of diagram met veel informatie</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="addsInfo" value="infoAlsoInText" />
+      <span>Ja, maar de informatie staat ook al in de tekst op de pagina</span>
+    </label>
+
+    <label class="opt">
+      <input type="radio" name="addsInfo" value="decorative" />
+      <span>Nee, de afbeelding is alleen voor decoratie</span>
+    </label>
+  </fieldset>
+
+  <!-- Resultaat -->
+  <section class="result" id="result" aria-live="polite" aria-atomic="true" hidden>
+    <h2 id="resultTitle"></h2>
+    <p id="resultBody"></p>
+    <ul id="resultList" hidden></ul>
+  </section>
+
+  <section class="tips">
+    <h2>Andere tips:</h2>
+    <ul>
+      <li>Houd het tekstalternatief kort, maximaal 150 tekens</li>
+      <li>Gebruik geen “afbeelding van” of “foto van”</li>
+    </ul>
+
+    <h2 class="mt">Voorbeelden:</h2>
+    <ul class="examples">
+      <li><span class="x">✗</span> Fout: “IMG_20250613.jpg”</li>
+      <li><span class="v">✓</span> Goed: “Team viert succes met taart en slingers”</li>
+      <li><span class="x">✗</span> Fout: “afbeelding van een man”</li>
+      <li><span class="v">✓</span> Goed: “Man in pak presenteert naast whiteboard met cijfers”</li>
+    </ul>
+  </section>
+</main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
