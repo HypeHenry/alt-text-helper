@@ -1,195 +1,177 @@
-const $ = (sel) => document.querySelector(sel);
+const q1a = document.getElementById("q1a");
+const q2 = document.getElementById("q2");
+const q3 = document.getElementById("q3");
+const result = document.getElementById("result");
 
-const q1a = $("#q1a");
-const q2 = $("#q2");
-const q3 = $("#q3");
+const resultTitle = document.getElementById("resultTitle");
+const resultBody = document.getElementById("resultBody");
+const resultList = document.getElementById("resultList");
 
-const result = $("#result");
-const resultTitle = $("#resultTitle");
-const resultBody = $("#resultBody");
-const resultList = $("#resultList");
-
-function getVal(name){
+function getVal(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : null;
 }
 
-function showResult(title, body, bullets = null){
-  result.hidden = false;
-  resultTitle.textContent = title;
-  resultBody.textContent = body || "";
-
-  if (bullets && bullets.length){
-    resultList.hidden = false;
-    resultList.innerHTML = bullets.map(b => `<li>${b}</li>`).join("");
-  } else {
-    resultList.hidden = true;
-    resultList.innerHTML = "";
-  }
+function show(el) {
+  el.classList.remove("is-hidden");
 }
 
-function hideResult(){
-  result.hidden = true;
+function hide(el) {
+  el.classList.add("is-hidden");
+}
+
+function clearGroup(name) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach((r) => {
+    r.checked = false;
+  });
+}
+
+function showResult(title, body, bullets = []) {
+  show(result);
+  resultTitle.textContent = title;
+  resultBody.textContent = body;
+
+  resultList.innerHTML = "";
+  bullets.forEach((b) => {
+    const li = document.createElement("li");
+    li.textContent = b;
+    resultList.appendChild(li);
+  });
+}
+
+function hideResult() {
+  hide(result);
   resultTitle.textContent = "";
   resultBody.textContent = "";
-  resultList.hidden = true;
   resultList.innerHTML = "";
 }
 
-function resetGroup(name){
-  document.querySelectorAll(`input[name="${name}"]`).forEach(r => (r.checked = false));
-}
-
-function update(){
+function update() {
   const hasText = getVal("hasText");
 
-  // Branch 1, er staat tekst in de afbeelding
-  if (hasText === "yes"){
-    q1a.hidden = false;
-    q2.hidden = true;
-    q3.hidden = true;
+  // Start state: only Q1 visible
+  if (!hasText) {
+    hide(q1a);
+    hide(q2);
+    hide(q3);
+    hideResult();
+    return;
+  }
 
-    resetGroup("inControl");
-    resetGroup("addsInfo");
+  // Branch: text in image
+  if (hasText === "yes") {
+    show(q1a);
+    hide(q2);
+    hide(q3);
+
+    // reset other branch
+    clearGroup("inControl");
+    clearGroup("addsInfo");
 
     const t = getVal("textType");
-    if (!t){
+    if (!t) {
       hideResult();
       return;
     }
 
-    if (t === "visualOnly"){
+    if (t === "functional") {
+      showResult("Deze afbeelding is functioneel.", "", [
+        "Link: beschrijf het doel van de link.",
+        "Knop: beschrijf het resultaat van de actie.",
+      ]);
+      return;
+    }
+
+    if (t === "nowhereElse") {
       showResult(
-        "De afbeelding is puur decoratief!",
-        "Verberg afbeeldingen die puur decoratief zijn voor schermlezers."
+        "Deze afbeelding is informatief.",
+        "Geef een tekstalternatief dat beschrijft wat er op de afbeelding te zien is."
       );
       return;
     }
 
-    if (t === "functional"){
-      showResult(
-        "Deze afbeelding is functioneel want het wordt ook gebruikt als link of knop!",
-        "",
-        [
-          "Link: Beschrijf wat het doel van de link is én beschrijf wat er op de afbeelding te zien is.",
-          "Knop: Beschrijf wat het resultaat van de actie is én beschrijf wat er op de afbeelding te zien is."
-        ]
-      );
-      return;
-    }
-
-    if (t === "nowhereElse"){
-      showResult(
-        "Deze afbeelding is informatief want het draagt informatie over!",
-        "Geef informatieve afbeeldingen een tekstalternatief dat beschrijft wat er op de afbeelding te zien is."
-      );
-      return;
-    }
-
-    // alreadyOnPage
     showResult(
-      "De afbeelding is puur decoratief!",
-      "Verberg afbeeldingen die puur decoratief zijn voor schermlezers."
+      "De afbeelding is decoratief.",
+      "Verberg decoratieve afbeeldingen voor screenreaders."
     );
     return;
   }
 
-  // Branch 2, er staat geen tekst in de afbeelding
-  q1a.hidden = true;
-  q2.hidden = false;
-
-  // vraag 3 pas tonen na het invullen van vraag 2, en alleen als antwoord "no"
-  const inControl = getVal("inControl");
+  // Branch: no text in image
+  hide(q1a);
+  show(q2);
 
   // reset text branch
-  resetGroup("textType");
+  clearGroup("textType");
 
-  // Als vraag 2 nog niet is ingevuld, verberg vraag 3 en verberg resultaat
-  if (!inControl){
-    q3.hidden = true;
-    resetGroup("addsInfo");
+  const inControl = getVal("inControl");
+
+  // Q3 must NOT show until Q2 is answered
+  if (!inControl) {
+    hide(q3);
+    clearGroup("addsInfo");
     hideResult();
     return;
   }
 
-  // Als afbeelding in link of knop zit, vraag 3 hoeft niet zichtbaar te zijn
-  if (inControl === "yesOnlyImage" || inControl === "yesWithText"){
-    q3.hidden = true;
-    resetGroup("addsInfo");
+  // If it is in a control, Q3 stays hidden
+  if (inControl === "yesOnlyImage") {
+    hide(q3);
+    clearGroup("addsInfo");
+    showResult("Deze afbeelding is functioneel.", "", [
+      "Link: beschrijf het doel van de link.",
+      "Knop: beschrijf het resultaat van de actie.",
+    ]);
+    return;
+  }
 
-    if (inControl === "yesOnlyImage"){
-      showResult(
-        "Deze afbeelding is functioneel want het wordt ook gebruikt als link of knop!",
-        "",
-        [
-          "Link: Beschrijf wat het doel van de link is én beschrijf wat er op de afbeelding te zien is.",
-          "Knop: Beschrijf wat het resultaat van de actie is én beschrijf wat er op de afbeelding te zien is."
-        ]
-      );
-      return;
-    }
-
-    // yesWithText
+  if (inControl === "yesWithText") {
+    hide(q3);
+    clearGroup("addsInfo");
     showResult(
-      "Afbeelding in link of knop met tekst aanwezig",
-      "Zorg dat de toegankelijke naam klopt door de aanwezige tekst, de afbeelding kan vaak decoratief worden gemaakt (alt=\"\")."
+      "De afbeelding kan decoratief zijn.",
+      "De tekst van de knop of link geeft al voldoende informatie."
     );
     return;
   }
 
-  // inControl === "no" -> nu pas vraag 3 tonen
-  q3.hidden = false;
+  // inControl === "no" -> show Q3
+  show(q3);
 
   const addsInfo = getVal("addsInfo");
-  if (!addsInfo){
+  if (!addsInfo) {
     hideResult();
     return;
   }
 
-  if (addsInfo === "simpleInfo"){
+  if (addsInfo === "simpleInfo") {
     showResult(
-      "Deze afbeelding is informatief want het draagt informatie over!",
-      "Geef informatieve afbeeldingen een tekstalternatief dat beschrijft wat er op de afbeelding te zien is."
+      "Deze afbeelding is informatief.",
+      "Geef een tekstalternatief dat beschrijft wat er op de afbeelding te zien is."
     );
     return;
   }
 
-  if (addsInfo === "complexInfo"){
+  if (addsInfo === "complexInfo") {
     showResult(
-      "De afbeelding is complex want het draagt complexe informatie over!",
-      "Beschrijf kort wat er op de afbeelding te zien is. Zorg ook voor een uitgebreide beschrijving in de omringende content of eventueel op een aparte pagina."
+      "Deze afbeelding is complex.",
+      "Beschrijf kort wat er te zien is en geef een uitgebreide toelichting in de tekst."
     );
     return;
   }
 
-  if (addsInfo === "infoAlsoInText" || addsInfo === "decorative"){
-    showResult(
-      "De afbeelding is puur decoratief!",
-      "Verberg afbeeldingen die puur decoratief zijn voor schermlezers."
-    );
-    return;
-  }
-
-  hideResult();
+  showResult(
+    "De afbeelding is decoratief.",
+    "Verberg decoratieve afbeeldingen voor screenreaders."
+  );
 }
 
 document.addEventListener("change", (e) => {
   if (e.target.matches('input[type="radio"]')) update();
 });
 
-update();
-
-function init(){
-  // alles verbergen behalve vraag 1
-  q1a.hidden = true;
-  q2.hidden = true;
-  q3.hidden = true;
-  hideResult();
-
-  // alle radio’s uit
-  document.querySelectorAll('input[type="radio"]').forEach(r => {
-    r.checked = false;
-  });
-}
-
-init();
+// Ensure start is empty and clean
+hide(q1a);
+hide(q2);
+hide(q3);
+hideResult();
