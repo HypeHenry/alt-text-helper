@@ -178,3 +178,18 @@ document.addEventListener("change", (e) => {
 });
 
 update();
+
+function init(){
+  // alles verbergen behalve vraag 1
+  q1a.hidden = true;
+  q2.hidden = true;
+  q3.hidden = true;
+  hideResult();
+
+  // alle radio’s uit
+  document.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.checked = false;
+  });
+}
+
+init();
