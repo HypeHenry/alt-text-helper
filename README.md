@@ -31,14 +31,6 @@ De tool is gebouwd met:
 - CSS  
 - Vanilla JavaScript (geen frameworks of externe afhankelijkheden)  
 
-## Bestandsstructuur
-Voorbeeldstructuur:
-/index.html
-/styles.css
-/script.js
-README.md
-
-
 ## Gebruik
 1. Open de applicatie in een browser.  
 2. Beantwoord de vragen in volgorde.  
