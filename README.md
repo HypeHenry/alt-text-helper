@@ -51,7 +51,6 @@ Er is rekening gehouden met:
 - Semantische HTML (fieldset, legend, labels)  
 - Toetsenbordbediening  
 - Screenreader ondersteuning  
-- aria-live voor dynamische resultaten  
 - Geen vooraf geselecteerde keuzes bij start  
 
 ## Doelgroep
