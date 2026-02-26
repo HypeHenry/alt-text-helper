@@ -38,3 +38,55 @@ Voorbeeldstructuur:
 /script.js
 README.md
 
+
+## Gebruik
+1. Open de applicatie in een browser.  
+2. Beantwoord de vragen in volgorde.  
+3. Lees het automatisch gegenereerde advies.  
+4. Pas het tekstalternatief toe in de eigen content of applicatie.  
+
+## Toegankelijkheid
+Er is rekening gehouden met:
+
+- Semantische HTML (fieldset, legend, labels)  
+- Toetsenbordbediening  
+- Screenreader ondersteuning  
+- aria-live voor dynamische resultaten  
+- Geen vooraf geselecteerde keuzes bij start  
+
+## Doelgroep
+Deze tool is bedoeld voor:
+
+- Contentspecialisten  
+- Webredacteuren  
+- UX designers  
+- Ontwikkelaars  
+- Communicatiemedewerkers  
+
+## Mogelijke uitbreidingen
+Toekomstige uitbreidingen kunnen zijn:
+
+- Opslaan van keuzes  
+- Export van advies  
+- Integratie met CMS workflows  
+- Meertalige ondersteuning  
+- Extra voorbeelden per categorie  
+
+## Inspiratie en bronvermelding
+
+Deze tool is geïnspireerd op de uitleg en structuur uit de kennisbankpagina *WCAG voor redacteuren* van Niek Derksen. De oorspronkelijke pagina biedt praktische richtlijnen voor het schrijven van tekstalternatieven en het toepassen van toegankelijkheidsprincipes in content.
+
+**Bron:**  
+https://niekderksen.nl/kennisbank/wcag-voor-redacteuren/
+
+De implementatie in deze repository is zelfstandig ontwikkeld als een standalone interactieve beslisboom. De interactielogica, technische uitwerking en inhoud zijn aangepast en verder uitgewerkt voor bredere toepasbaarheid.
+
+Het doel van deze tool is het ondersteunen van contentmakers bij het correct toepassen van digitale toegankelijkheid, in lijn met WCAG-richtlijnen.
+
+Alle credits voor het oorspronkelijke concept en de inhoudelijke inspiratie gaan naar Niek Derksen.
+
+## Licentie
+Vrij te gebruiken en aan te passen binnen de eigen organisatie. Aanpassingen aan huisstijl of richtlijnen zijn mogelijk.
+
+## Auteur
+Ontwikkeld ter ondersteuning van digitale toegankelijkheid en het correct toepassen van tekstalternatieven voor afbeeldingen.
