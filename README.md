@@ -61,16 +61,7 @@ Deze tool is bedoeld voor:
 - Webredacteuren  
 - UX designers  
 - Ontwikkelaars  
-- Communicatiemedewerkers  
-
-## Mogelijke uitbreidingen
-Toekomstige uitbreidingen kunnen zijn:
-
-- Opslaan van keuzes  
-- Export van advies  
-- Integratie met CMS workflows  
-- Meertalige ondersteuning  
-- Extra voorbeelden per categorie  
+- Communicatiemedewerkers    
 
 ## Inspiratie en bronvermelding
 
